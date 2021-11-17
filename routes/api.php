@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 /*Route::get('/books', [BookController::class, 'index']);
 Route::post('/books', [BookController::class, 'store']);
 Route::get('/books/{id}', [BookController::class, 'show']);
@@ -30,4 +31,8 @@ Route::delete('/books/{id}', [BookController::class, 'destroy']);
 */
 
 Route::resource('books', BookController::class)->except('create', 'edit');
-Route::resource('authors', AuthorController::class)->except('create', 'edit');
+Route::resource('authors', AuthorController::class)->except('create', 'edit')->middleware('auth:sanctum');
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
